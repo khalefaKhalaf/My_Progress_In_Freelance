@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Freelance Journey | خليفة خلف</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -168,6 +169,42 @@
 /* لضمان إخفاء اللغة غير المفعلة في كل مكان */
 [lang="ar"] .en-text { display: none; }
 [lang="en"] .ar-text { display: none; }
+/* تنسيقات الموبايل (Responsive) */
+@media (max-width: 768px) {
+    /* تصغير حجم الخط في القائمة العلوية */
+    .nav-item {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+    }
+
+    /* جعل الأقسام تلتف إذا لم تكفِ المساحة */
+    .nav-links {
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* ضبط الحاوية لتكون عمودية في الموبايل لضمان عدم التداخل */
+    .nav-container {
+        flex-direction: column !important;
+        gap: 10px;
+    }
+
+    /* تصغير حجم الكروت قليلاً */
+    .card {
+        padding: 15px;
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    /* ضبط حجم الصور لتناسب شاشة الموبايل تماماً */
+    .screenshot {
+        max-height: 350px !important; /* تقليل الطول في الموبايل */
+    }
+
+    /* إخفاء نصوص الأيام الطويلة واختصارها في الموبايل (اختياري) */
+    .nav-item .ar-text { font-size: 0.7rem; }
+}
 </style>
 </head>
 <body>
