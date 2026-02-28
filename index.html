@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Journey | خليفة خلف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --text-color: #f8fafc;
+        --accent-color: #38bdf8;
+        --border-color: #334155;
+    }
+
+    [data-theme="light"] {
+        --bg-color: #f1f5f9;
+        --card-bg: rgba(255, 255, 255, 0.8);
+        --text-color: #1e293b;
+        --accent-color: #0284c7;
+        --border-color: #cbd5e1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s ease; }
+    
+    html { 
+        scroll-behavior: smooth; 
+        /* شلنا خاصية الـ snap-type من هنا عشان السكرول يبقى حر */
+    }
+
+    body { 
+        background-color: var(--bg-color); 
+        color: var(--text-color); 
+        font-family: 'Cairo', 'Poppins', sans-serif;
+        overflow-x: hidden;
+        margin: 0;
+    }
+
+    .controls {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1000;
+    }
+
+    .btn-tool {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 8px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+        font-weight: bold;
+    }
+
+    .slide {
+        min-height: 100vh; /* هيفضل واخد طول الشاشة بس مش هيجبرك تقف عنده */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 20px; /* زودنا المسافة عشان لما تسكرول براحتك الكلام ميبقاش لازق في بعضه */
+        /* شلنا scroll-snap-align من هنا */
+    }
+    .card {
+        background: var(--card-bg);
+        padding: 40px;
+        border-radius: 30px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+        backdrop-filter: blur(15px);
+    }
+
+    /* تنسيق موحد للصور داخل الكروت لضمان عدم خروجها عن الإطار */
+    .screenshot {
+        max-width: 100%;
+        max-height: 380px; /* طول مناسب للصورة لعدم تمدد الكارت */
+        height: auto;
+        border-radius: 15px;
+        margin: 15px 0;
+        border: 1px solid var(--border-color);
+        object-fit: contain;
+    }
+
+    h1 { color: var(--accent-color); font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 15px; }
+    h3 { color: var(--text-color); opacity: 0.9; margin-bottom: 15px; font-size: 1.5rem; }
+    
+    .btn-action {
+        display: inline-block;
+        padding: 12px 35px;
+        background: var(--accent-color);
+        color: white !important;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-top: 15px;
+    }
+
+    .btn-action:hover { transform: scale(1.05); box-shadow: 0 5px 15px var(--accent-color); }
+
+    [lang="ar"] .en-text { display: none; }
+    [lang="en"] .ar-text { display: none; }
+
+    #hero {
+        background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-color) 100%);
+    }
+    /* التنسيق الرئيسي للبار العلوي */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+    z-index: 3000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-between;
+}
+
+/* تبديل الاتجاه بناءً على اللغة */
+[lang="ar"] .nav-container { flex-direction: row; }
+[lang="en"] .nav-container { flex-direction: row-reverse; }
+
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-item {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    font-size: 0.85rem;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.nav-item:hover {
+    background: var(--accent-color);
+    color: white !important;
+}
+
+/* لضمان إخفاء اللغة غير المفعلة في كل مكان */
+[lang="ar"] .en-text { display: none; }
+[lang="en"] .ar-text { display: none; }
+</style>
+</head>
+<body>
+    
+    <nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-links">
+            <a href="#hero" class="nav-item">
+                <span class="ar-text">الرئيسية</span><span class="en-text">Home</span>
+            </a>
+            <a href="#day1" class="nav-item">
+                <span class="ar-text">اليوم الأول</span><span class="en-text">Day 1</span>
+            </a>
+            <a href="#day2" class="nav-item">
+                <span class="ar-text">اليوم الثاني</span><span class="en-text">Day 2</span>
+            </a>
+            <a href="#day3" class="nav-item">
+                <span class="ar-text">اليوم الثالث</span><span class="en-text">Day 3</span>
+            </a>
+            <a href="#day4" class="nav-item">
+                <span class="ar-text">اليوم الرابع</span><span class="en-text">Day 4</span>
+            </a>
+        </div>
+
+        <div class="nav-controls">
+            <button class="btn-tool" onclick="toggleLanguage()">
+                <span class="ar-text">English</span><span class="en-text">العربية</span>
+            </button>
+            <button class="btn-tool" onclick="toggleTheme()">🌓</button>
+        </div>
+    </div>
+</nav>
+
+    <section class="slide" id="hero">
+        <div class="card">
+            <h1 class="ar-text">تقدمي في مجال العمل الحر</h1>
+            <h1 class="en-text">My Freelance Journey Progress</h1>
+            
+            <h3 class="ar-text">بواسطة: خليفة خلف</h3>
+            <h3 class="en-text">By: Khalifa Khalaf</h3>
+
+            <p class="ar-text">توثيق يومي لخطواتي نحو الاحترافية في سوق العمل الرقمي</p>
+            <p class="en-text">Daily documentation of my steps toward professionalism in the digital market</p>
+
+            <a href="#day1" class="btn-action">
+                <span class="ar-text">ابدأ العرض</span>
+                <span class="en-text">Start Presentation</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="slide" id="day1">
+        <div class="card">
+            <div class="day-badge" style="background: var(--accent-color); color: white; padding: 5px 15px; border-radius: 50px; margin-bottom: 15px; display: inline-block;">
+                <span class="ar-text">اليوم الأول: الانطلاقة</span>
+                <span class="en-text">Day 1: The Launch</span>
+            </div>
+
+            <h1 class="ar-text" style="font-size: 2.2rem;">خليفة خلف | شريك نجاحك الرقمي</h1>
+            <h1 class="en-text" style="font-size: 2.2rem;">Khalifa Khalaf | Digital Success Partner</h1>
+
+            <h3 style="color: var(--accent-color);">
+                <span class="ar-text">الميزة التنافسية (USP): أنا لست مجرد مبرمج، أنا شريك رحلتك</span>
+                <span class="en-text">USP: I'm not just a programmer, I'm your partner</span>
+            </h3>
+
+            <p class="ar-text">
+                مطور Full Stack .NET شغوف ببناء أنظمة متكاملة. في السنة الثالثة بكلية الحاسبات والمعلومات. 
+                أرافقك من الفكرة حتى التنفيذ لضمان أفضل تجربة لمشروعك.
+            </p>
+            <p class="en-text">
+                Full Stack .NET developer passionate about building integrated systems. 3rd-year CS student. 
+                I accompany you from idea to execution to ensure the best experience.
+            </p>
+
+            <a href="https://khalefakhalaf.github.io/my-portfolio/" target="_blank" class="btn-action">
+                <span class="ar-text">تصفح معرض أعمالي</span>
+                <span class="en-text">View Portfolio</span>
+            </a>
+        </div>
+    </section>
+    <section class="slide" id="day2">
+        <div class="card">
+            <div class="day-badge">Day 2</div>
+            <h1 class="ar-text">التواجد على منصة خمسات</h1>
+            <h1 class="en-text">Joining Khamsat Platform</h1>
+            
+            <img src="images/khamsat-profile.png" alt="Khalifa Khalaf - Khamsat" class="screenshot" 
+                 style="max-width: 100%; max-height: 400px; height: auto; border-radius: 15px; margin: 20px 0; border: 1px solid var(--border-color); display: block; margin-left: auto; margin-right: auto; object-fit: contain;">
+
+            <p class="ar-text">
+                تم إنشاء الحساب بنجاح باسم <strong>Khalifa Khalaf</strong>.
+                النبذة: "أكثر من مجرد كود.. أبني تجارب لا أقوم فقط بتطوير المواقع بل أصنع حلول تنمو مع رؤيتك".
+            </p>
+            
+            <div style="margin-top: 20px;">
+                <a href="https://khamsat.com/user/khalifakhalaf" target="_blank" class="btn-action">
+                    <span class="ar-text">زيارة حسابي على خمسات</span>
+                    <span class="en-text">Visit my Khamsat Profile</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="slide" id="day3">
+        <div class="card">
+            <div class="day-badge">Day 3</div>
+            <h1 class="ar-text">إطلاق الخدمة الأولى على خمسات</h1>
+            <h1 class="en-text">Launching the First Service</h1>
+            
+            <img src="images/service-1.jpeg" alt="Full Stack .NET Service" class="screenshot" 
+                 style="width: 100%; max-height: 550px; height: auto; border-radius: 15px; margin: 20px 0; border: 1px solid var(--border-color); display: block; margin-left: auto; margin-right: auto; object-fit: contain;">
+
+            <h3 style="color: var(--accent-color); margin-bottom: 15px;">
+                <span class="ar-text">بناء وتطوير مواقع ويب احترافية ومتجاوبة</span>
+                <span class="en-text">Professional Web Development</span>
+            </h3>
+
+            <p class="ar-text">
+                تم نشر أول خدمة متخصصة في تطوير الـ <strong>Full Stack</strong> باستخدام <strong>ASP.NET Core</strong>.
+            </p>
+            
+            <div style="margin-top: 25px;">
+                <a href="https://khamsat.com/programming/custom-website-development/4115876-%D8%A8%D9%86%D8%A7%D8%A1-%D9%88%D8%AA%D8%B7%D9%88%D9%8A%D8%B1-%D9%85%D9%88%D8%A7%D9%82%D8%B9-%D9%88%D9%8A%D8%A8-%D8%A7%D8%AD%D8%AA%D8%B1%D8%A7%D9%81%D9%8A%D8%A9-%D9%88%D9%85%D8%AA%D8%AC%D8%A7%D9%88%D8%A8%D8%A9-%D9%84%D8%AC%D9%85%D9%8A%D8%B9-%D8%A7%D9%84%D8%A3%D8%AC%D9%87%D8%B2%D8%A9" 
+                   target="_blank" class="btn-action">
+                    <span class="ar-text">تصفح الخدمة على خمسات</span>
+                    <span class="en-text">View Service on Khamsat</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="slide" id="day4">
+        <div class="card">
+            <div class="day-badge">Day 4</div>
+            <h1 class="ar-text">الانطلاق في منصة مستقل</h1>
+            <h1 class="en-text">Expanding to Mostaql</h1>
+            
+            <img src="images/service-2.jpeg" alt="Mostaql Registration" class="screenshot" 
+                 style="width: 100%; max-height: 500px; height: auto; border-radius: 15px; margin: 20px 0; border: 1px solid var(--border-color); display: block; margin-left: auto; margin-right: auto; object-fit: contain;">
+
+            <h3 style="color: var(--accent-color); margin-bottom: 15px;">
+                <span class="ar-text">خطوة جديدة نحو المشاريع الكبيرة</span>
+                <span class="en-text">A New Step Towards Big Projects</span>
+            </h3>
+
+            <p class="ar-text">
+                اليوم تم تقديم طلب الانضمام لمنصة <strong>مستقل</strong>. 
+                الهدف هو اقتناص مشاريع برمجية متكاملة تبرز مهاراتي كمطور <strong>Full Stack .NET</strong> وتضيف قيمة حقيقية لأصحاب الأعمال.
+            </p>
+            
+            <div style="margin-top: 25px;">
+                <a href="https://mostaql.com/u/Khalifa_Khalaf" target="_blank" class="btn-action">
+                    <span class="ar-text">تصفح بروفايلي على مستقل</span>
+                    <span class="en-text">View Mostaql Profile</span>
+                </a>
+            </div>
+        </div>
+    </section>
+   <script>
+    function toggleLanguage() {
+        const html = document.documentElement;
+        const currentLang = html.getAttribute('lang');
+        const newLang = currentLang === 'ar' ? 'en' : 'ar';
+        
+        // تغيير لغة الصفحة
+        html.setAttribute('lang', newLang);
+        
+        // تغيير اتجاه الصفحة تلقائياً
+        html.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+        
+        // حفظ التفضيلات في المتصفح
+        localStorage.setItem('preferredLang', newLang);
+    }
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('preferredTheme', newTheme);
+    }
+
+    // تشغيل التفضيلات المحفوظة عند تحميل الصفحة
+    window.onload = () => {
+        const savedLang = localStorage.getItem('preferredLang') || 'ar';
+        const savedTheme = localStorage.getItem('preferredTheme') || 'dark';
+        
+        document.documentElement.setAttribute('lang', savedLang);
+        document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    };
+</script>
+</body>
+</html>
